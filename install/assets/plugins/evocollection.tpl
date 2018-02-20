@@ -2,7 +2,7 @@
 /**
  * evoCollection
  * 
- * Save snippet and plugins to file
+ * creates a table from documents
  *
  * @category    plugin
  * @version     1.0a
