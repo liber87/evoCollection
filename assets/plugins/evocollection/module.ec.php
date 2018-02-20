@@ -5,7 +5,7 @@
 	$page = '
 	<html>
 	<head>
-	<title>Модуль рассылки</title>
+	<title>Модуль редактирования конфигурации evoCollection</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<script src="media/script/jquery/jquery.min.js" type="text/javascript"></script>
 	<script type="text/javascript" src="media/script/tabpane.js"></script>
@@ -200,7 +200,12 @@
 				$ortop=$row['category'];
 				$module.= '</optgroup><optgroup label=\''.$row['category'].'\'>';
 			}
-			$module.='<option value="'.$row['id'].'">'.$row['templatename'].'</option>';
+			if ($config[$idc]['type']!='template')
+			{
+				if ($row['id']==$config[$idc]['value']) $ss = 'selected="selected"';
+				else $ss = '';
+			}
+			$module.='<option value="'.$row['id'].'" '.$ss.'>'.$row['templatename'].'</option>';
 		}
 		$module.='</optgroup>';
 		$module.='</select>
