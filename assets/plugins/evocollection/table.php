@@ -344,7 +344,7 @@
 	how_click = "'.$config[$idc]['how_edit'].'";
 	new_doc = "'.$config[$idc]['new_doc'].'";
 	</script>
-	<script src="/assets/plugins/evocollection/js/evocollection.js?v=1" type="text/javascript"></script>	
+	<script src="/assets/plugins/evocollection/js/evocollection.js?v=1.0" type="text/javascript"></script>	
 	<script src="/assets/plugins/tinymce4/tinymce/tinymce.min.js"></script>
 	
 	
