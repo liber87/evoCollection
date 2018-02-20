@@ -34,3 +34,4 @@ input[data-field=id]{display:none !important;}
 .input{display:none;}
 #spiner_new_str{font-size:16px; display:none;}
 .save_content{cursor:pointer !important; color:white !important;}
+.extender{width:100%; min-height:18px;}
