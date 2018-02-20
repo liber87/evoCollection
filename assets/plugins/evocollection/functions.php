@@ -78,7 +78,7 @@
 					$value = str_replace(']','&#93;',$value);
 					$return = $value;
 				}				
-				if (!$return) $return = '<div class="extender">не задан</div>';
+				if ((!$return) && (!$value)) $return = '<div class="extender">не задан</div>';
 			}
 			
 			
