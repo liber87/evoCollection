@@ -282,10 +282,13 @@
 	
 	
 	$tbl.='</tbody></table></div></div>';
-	
+
+	if ($config[$idc]['title']) $title = $config[$idc]['title'];
+	else $title = $modx->getFullTableName('site_content').' where id='.$id);	
+
 	$output.='		
 	<div class="tab-page" id="tabProducts">
-	<h2 class="tab">'.$modx->db->getValue('Select `pagetitle` from '.$modx->getFullTableName('site_content').' where id='.$id).'</h2>
+	<h2 class="tab">'.$title.'</h2>
 	
 	<div class="btn-group" style="float:right;">
 	<div class="btn-group dropdown" style=" margin:10px 10px 10px; ">					
