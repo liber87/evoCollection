@@ -1,6 +1,6 @@
 //<?php
 /**
- * FileSource 
+ * evoCollection
  * 
  * Save snippet and plugins to file
  *
