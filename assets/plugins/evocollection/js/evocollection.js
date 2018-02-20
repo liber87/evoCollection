@@ -2,6 +2,7 @@ var lastImageCtrl;
 var lastFileCtrl;
 
 
+
 function $_GET(key) {
     var p = window.location.search;
     p = p.match(new RegExp(key + '=([^&=]+)'));
@@ -33,10 +34,10 @@ function SetUrlChange(el)
 {
 	if ('createEvent' in document) {
 		var evt = document.createEvent('HTMLEvents');
-		evt.initEvent('change', false, true);
+		evt.initEvent('blur', false, true);
 		el.dispatchEvent(evt);
 		} else {
-		el.fireEvent('onchange');
+		el.fireEvent('blur');
 	}
 }
 
@@ -89,6 +90,9 @@ function set_field_value(tag,value)
 	{		
 		tag.parent().find('.output').html(data);
 		idx=0;
+		$j('.noimgs').each(function(){
+			imgs.push($j(this).data('href'));
+		});
 		if (imgs.length>0)
 		{
 			set_photo(idx);
@@ -192,8 +196,8 @@ $j(document).ready(function(){
 		
 	});
 	
-	//$j('#table_doc').on('change','.browser',function(){
-	$j('.browser').change(function(){
+	$j('#table_doc').on('change','.browser',function(){
+		//$j('.browser').change(function(){
 		blur_input($j(this));
 	});
 	
