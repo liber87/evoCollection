@@ -77,18 +77,7 @@
 			exit();
 		}
 		
-		
-		// Новый документ
-		/*if (!$_POST[id])
-			{
-			$doc = array('type'=>'document','contentType'=>'text/html','pagetitle'=>'New document','longtitle'=>'','description'=>'','alias'=>'',	'link_attributes'=>'','published'=>'1','pub_date'=>'0','unpub_date'=>'0','parent'=>$_POST['parent'],'isfolder'=>'0','introtext'=>'',	'content'=>'','richtext'=>'1','template'=>$_POST['template'],'menuindex'=>'0');
-			
-			
-			$_POST[id] = $modx->db->insert($doc,$modx->getFullTableName('site_content'));
-			if ($_POST['field']=="pagetitle") $alias = $modx->stripAlias($_POST['value']);
-			else $alias = $_POST[id];
-			$modx->db->update(array('alias'=>$alias),$modx->getFullTableName('site_content'),'id='.$_POST[id]);
-		}*/
+				
 		if ($_POST['field']=="id") return;
 		
 		// Обработка поля
