@@ -284,7 +284,7 @@
 	$tbl.='</tbody></table></div></div>';
 
 	if ($config[$idc]['title']) $title = $config[$idc]['title'];
-	else $title = $modx->getFullTableName('site_content').' where id='.$id);	
+	else $title = $modx->db->getValue('Select `pagetitle` from '.$modx->getFullTableName('site_content').' where id='.$id);
 
 	$output.='		
 	<div class="tab-page" id="tabProducts">
