@@ -2,7 +2,6 @@ var lastImageCtrl;
 var lastFileCtrl;
 
 
-
 function $_GET(key) {
     var p = window.location.search;
     p = p.match(new RegExp(key + '=([^&=]+)'));
@@ -19,11 +18,7 @@ function OpenServerBrowser(url, width, height )
 	sOptions += ',height=' + height ;
 	sOptions += ',left=' + iLeft ;
 	sOptions += ',top=' + iTop ;	
-	var oWindow = window.open( url, 'FCKBrowseWindow', sOptions ) ;
-	
-	console.log(oWindow);
-	
-	
+	var oWindow = window.open( url, 'FCKBrowseWindow', sOptions ) ;	
 }
 
 function BrowseServer(ctrl,t) {
@@ -32,6 +27,39 @@ function BrowseServer(ctrl,t) {
 	var h = screen.height * 0.5;
 	OpenServerBrowser(manager_url+'media/browser/mcpuk/browser.php?Type='+t, w, h);
 }
+
+
+function SetUrlChange(el) 
+{
+	if ('createEvent' in document) {
+		var evt = document.createEvent('HTMLEvents');
+		evt.initEvent('change', false, true);
+		el.dispatchEvent(evt);
+		} else {
+		el.fireEvent('onchange');
+	}
+}
+
+function SetUrl(url, width, height, alt) {
+	if(lastFileCtrl) {
+		var c = document.getElementById(lastFileCtrl);
+		if(c && c.value != url) {
+			c.value = url;
+			SetUrlChange(c);
+		}
+		lastFileCtrl = '';
+		} else if(lastImageCtrl) {
+		var c = document.getElementById(lastImageCtrl);
+		if(c && c.value != url) {
+			c.value = url;
+			SetUrlChange(c);
+		}
+		lastImageCtrl = '';
+		} else {
+		return;
+	}
+}
+
 function act()
 {	
 	var url = manager_url+'?a='+$_GET('a')+'&id='+$_GET('id');
@@ -65,7 +93,7 @@ function set_field_value(tag,value)
 		{
 			set_photo(idx);
 		}	
-	
+		
 	}
 	);
 }
@@ -105,7 +133,7 @@ document.mutate.onsubmit = function(event) {
 }
 $j(document).ready(function(){
 	
-		
+	
 	not_submit = false;
 	t='';
 	ta_id = '';
