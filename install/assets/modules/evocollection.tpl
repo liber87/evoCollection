@@ -2,7 +2,7 @@
 /**
  * evoCollection
  * 
- * first repository for Evolution CMS
+ * Module for configurate evoCollection
  * 
  * @category	module
  * @version 	1.0a
