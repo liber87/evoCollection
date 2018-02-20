@@ -441,7 +441,7 @@
 				<td><label>'.$conf['name'].'</label></td>
 				<td><label>'.$conf['description'].'</label></td>
 				<td style="width:1%;">
-				<label><a href="index.php?a=112&id='.$_GET['id'].'&idc='.$k.'" target="main"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></label>
+				<label><a href="index.php?a=112&id='.$_GET['id'].'&idc='.$k.'"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></label>
 				</td>
 				</tr>';
 			}
