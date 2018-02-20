@@ -200,7 +200,7 @@
 				$ortop=$row['category'];
 				$module.= '</optgroup><optgroup label=\''.$row['category'].'\'>';
 			}
-			if ($config[$idc]['type']!='template')
+			if ($config[$idc]['type']=='template')
 			{
 				if ($row['id']==$config[$idc]['value']) $ss = 'selected="selected"';
 				else $ss = '';
