@@ -6,13 +6,16 @@
 		*
 		* @category    plugin
 		* @version     0.1a
-		* @license     http://www.gnu.org/copyleft/gpl.html GNU Public License (GPL)
-		inlineTheme=<b>Inline-Mode</b><br/>Theme;text;inline &browser_spellcheck=<b>Browser Spellcheck</b><br/>At least one dictionary must be installed inside your browser;list;enabled,disabled;disabled
+		* @license     http://www.gnu.org/copyleft/gpl.html GNU Public License (GPL)		
 		* @internal    @events OnManagerNodePrerender,OnPageNotFound,OnDocFormRender
 		* @internal    @modx_category Manager and Admin
 		* @author      Alexey Liber
-	* @lastupdate  25.07.2017 */
+	* @lastupdate  20.02.2018 */
 	$e = &$modx->Event;
+	if (!file_exists(MODX_BASE_PATH."assets/plugins/evocollection/config.inc.php"))
+	{
+		rename(MODX_BASE_PATH."assets/plugins/evocollection/config.inc.php.blank",MODX_BASE_PATH."assets/plugins/evocollection/config.inc.php");
+	}		
 	require MODX_BASE_PATH."assets/plugins/evocollection/config.inc.php";
 	require MODX_BASE_PATH."assets/plugins/evocollection/functions.php"; 	
 		
