@@ -4,14 +4,16 @@
 		function get_output($config)
 		{			
 			global $modx;	
-			if ($config['user_func']) return $modx->runSnippet($config['user_func'], $config);	
-			
-			extract($config);
-			if ($mode=='input') $return = '<input value="'.$value.'">';
+			if ($config['user_func']) return $modx->runSnippet($config['user_func'], $config);				
+			extract($config);		
 			
 			
 			if ($mode=='output')
 			{	
+				if (($type=='default') || ($type=='text'))
+				{
+					$return = strip_tags($value);
+				}
 				if ($type=='mediumtext') 
 				{
 					$return = mb_substr(strip_tags($value),0,75).'...';
@@ -76,13 +78,21 @@
 					$value = str_replace(']','&#93;',$value);
 					$return = $value;
 				}				
+				if (!$return) $return = '<div class="extender">не задан</div>';
 			}
 			
 			
 			
 			
 			if ($mode=='input')
-			{
+			{				
+				if (($type=='default') || ($type=='text'))
+				{
+					$value = htmlspecialchars($value);
+					$return = '<input type="text" value="'.$value.'">';
+				}
+				
+				$value = str_replace('"','\"',$value);
 				if ($type=='mediumtext') 
 				{
 					$return = mb_substr(strip_tags($value),0,75).'...';
@@ -122,7 +132,7 @@
 			}
 			
 			if ($mode=='execute')
-			{
+			{			
 				if ($type=='date') 
 				{				
 					$startdate = date($value." 12:00:00");
