@@ -244,7 +244,7 @@
 			{
 				$tbl.='
 				<td>
-				<div class="input" 
+				<div class="ecoll_field"><div class="input" 
 				data-id="'.$row[id].'"
 				data-table="'.$table.'"
 				data-field="'.$f.'"
@@ -266,7 +266,7 @@
 				'table'=>$table,
 				'type'=>$type,
 				'user_func'=>$user,
-				'mode'=>'output')).'</div>
+				'mode'=>'output')).'</div></div>
 				</td>';
 			}
 			
