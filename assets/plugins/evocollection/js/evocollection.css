@@ -35,3 +35,7 @@ input[data-field=id]{display:none !important;}
 #spiner_new_str{font-size:16px; display:none;}
 .save_content{cursor:pointer !important; color:white !important;}
 .extender{width:100%; min-height:18px;}
+
+.ecoll_field {position:relative;}
+.ecoll_field .input {position: absolute; width: 100%;}
+.ecoll_field .output {padding: 0.46153846em .5em;}
