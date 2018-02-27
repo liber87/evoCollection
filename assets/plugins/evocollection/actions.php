@@ -24,7 +24,7 @@
 		break;
 		
 		case 'getcontent':			
-			if ($_POST['table']=='content') echo $modx->db->getValue('Select `content` from '.$modx->getFullTableName('site_content').' where id='.$_POST['id']);					
+			if ($_POST['table']=='content') echo $modx->db->getValue('Select '.$modx->db->escape($_POST['field']).' from '.$modx->getFullTableName('site_content').' where id='.$modx->db->escape($_POST['id']));					
 			else 
 			{
 				$idtv = $modx->db->getValue('Select `id` from '.$modx->getFullTableName('site_tmplvars').' where name="'.$_POST['field'].'"');	
@@ -45,12 +45,12 @@
 			'published'=>'1',
 			'pub_date'=>'0',
 			'unpub_date'=>'0',
-			'parent'=>$_POST['parent'],
+			'parent'=>$modx->db->escape($_POST['parent']),
 			'isfolder'=>'0',
 			'introtext'=>'',
 			'content'=>'',
 			'richtext'=>'1',
-			'template'=>$_POST['template'],
+			'template'=>$modx->db->escape($_POST['template']),
 			'menuindex'=>'0');
 			
 			$did = $modx->db->insert($doc,$modx->getFullTableName('site_content'));
@@ -72,7 +72,7 @@
 			if ($_POST['field']=="id") return;
 			
 			// Обработка поля			
-			$val = get_output(array('did'=>$_POST[id],
+			$val = get_output(array('did'=>$_POST['id'],
 			'value'=>$_POST[value],
 			'field'=>$_POST['field'],
 			'table'=>$_POST['table'],
@@ -83,19 +83,19 @@
 			// Работаем с поялями документа
 			if ($_POST['table']=='content') 			
 			{			
-				$modx->db->query('Update '.$modx->getFullTableName('site_content').' set '.$_POST['field'].'="'.$modx->db->escape($val).'" where id='.$_POST[id]);
+				$modx->db->query('Update '.$modx->getFullTableName('site_content').' set '.$modx->db->escape($_POST['field']).'="'.$modx->db->escape($val).'" where id='.$modx->db->escape($_POST['id']));
 			}
 			
 			
 			// Работаем с ТВ-кой
 			if ($_POST['table']=='tv')
 			{
-				$idtv = $modx->db->getValue('Select `id` from '.$modx->getFullTableName('site_tmplvars').' where name="'.$_POST['field'].'"');	
-				if ($modx->db->getValue('Select count(*) from '.$modx->getFullTableName('site_tmplvar_contentvalues').' where contentid='.$_POST[id].' and `tmplvarid`='.$idtv))
+				$idtv = $modx->db->getValue('Select `id` from '.$modx->getFullTableName('site_tmplvars').' where name="'.$modx->db->escape($_POST['field']).'"');	
+				if ($modx->db->getValue('Select count(*) from '.$modx->getFullTableName('site_tmplvar_contentvalues').' where contentid='.$modx->db->escape($_POST['id']).' and `tmplvarid`='.$idtv))
 				{
-					$modx->db->query('Update '.$modx->getFullTableName('site_tmplvar_contentvalues').' set value="'.$modx->db->escape($val).'" where contentid='.$_POST[id].' and `tmplvarid`='.$idtv);
+					$modx->db->query('Update '.$modx->getFullTableName('site_tmplvar_contentvalues').' set value="'.$modx->db->escape($val).'" where contentid='.$modx->db->escape($_POST[id]).' and `tmplvarid`='.$modx->db->escape($idtv));
 				}
-				else $modx->db->insert(array('contentid'=>$_POST[id],'tmplvarid'=>$idtv,'value'=>$modx->db->escape($val)),$modx->getFullTableName('site_tmplvar_contentvalues'));
+				else $modx->db->insert(array('contentid'=>$modx->db->escape($_POST['id']),'tmplvarid'=>$modx->db->escape($idtv),'value'=>$modx->db->escape($val)),$modx->getFullTableName('site_tmplvar_contentvalues'));
 			}
 			
 			echo get_output(array('did'=>$_POST[id],
