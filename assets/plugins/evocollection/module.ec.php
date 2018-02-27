@@ -1,5 +1,5 @@
 <?php
-	if (!defined('MODX_BASE_PATH')) { die('What are you doing? Get out of here!'); }
+	if(!isset($_SESSION['mgrValidated'])){ die();}
 	require_once(MODX_BASE_PATH."assets/plugins/evocollection/config.inc.php");
 	
 	$page = '

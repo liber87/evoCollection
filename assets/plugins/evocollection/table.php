@@ -1,7 +1,6 @@
-<?php
-	
-	if (!$_SESSION[mgrInternalKey]) { die('What are you doing? Get out of here!'); }	
-	if (!$_GET[id]) return;	
+<?php	
+	if(!isset($_SESSION['mgrValidated'])){ die();}	
+	if (!$_GET['id']) return;	
 	if ($_GET['a']==4) return;	
 	if(($_GET['act']) && ($_GET['docid']))
 	{
@@ -15,11 +14,8 @@
 		}
 	}
 	
-	$cf = array();
-	
-	
-	$output.='';
-	
+	$cf = array();	
+	$output.='';	
 	$tid = $modx->db->getValue('Select template from '.$modx->getFullTableName('site_content').' where id='.$id);
 	
 	foreach($configuration as $key => $conf)
@@ -55,11 +51,9 @@
 			}
 		}
 		
-	}
-	
+	}	
 	if (!$fields) return;
-	
-	
+		
 	// Filed for sort
 	if ($_GET['sorter']) $sorter = $_GET['sorter'];
 	else 
@@ -270,16 +264,12 @@
 				</td>';
 			}
 			
-		}
-		
-		$tbl.= '<td><div class="actions text-center text-nowrap"><a href="index.php?a=27&amp;id='.$row[id].'&amp;dir=DESC&amp;sort=createdon" title="Редактировать"><i class="fa fa-pencil-square-o"></i></a></div></td><td><input type="checkbox" name="docid[]" value="'.$row[id].'" class="docid"></td></tr>';
-		
+		}		
+		$tbl.= '<td><div class="actions text-center text-nowrap"><a href="index.php?a=27&amp;id='.$row[id].'&amp;dir=DESC&amp;sort=createdon" title="Редактировать"><i class="fa fa-pencil-square-o"></i></a></div></td><td><input type="checkbox" name="docid[]" value="'.$row[id].'" class="docid"></td></tr>';		
 	}
 	
 	
-	
-	if ($config[$idc]['new_doc']=='down') $tbl.='<tr id="newstrbutt"><td colspan="'.(count($ff)+1).'"></td><td><i class="fa fa-plus" aria-hidden="true" id="news_str" data-template="'.$configuration[$idc]['template_default'].'" data-parent="'.$_GET['id'].'"></i><i class="fa fa-spinner fa-spin"  id="spiner_new_str"></i></td></tr>';
-	
+	if ($config[$idc]['new_doc']=='down') $tbl.='<tr id="newstrbutt"><td colspan="'.(count($ff)+1).'"></td><td><i class="fa fa-plus" aria-hidden="true" id="news_str" data-template="'.$configuration[$idc]['template_default'].'" data-parent="'.$_GET['id'].'"></i><i class="fa fa-spinner fa-spin"  id="spiner_new_str"></i></td></tr>';	
 	
 	$tbl.='</tbody></table></div></div>';
 
@@ -349,6 +339,5 @@
 	
 	
 	';		
-	
 	
 $e->output($output);

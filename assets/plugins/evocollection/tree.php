@@ -1,5 +1,5 @@
 <?php
-if (!$_SESSION[mgrInternalKey]) { die('What are you doing? Get out of here!'); }	
+if(!isset($_SESSION['mgrValidated'])){ die();}
 
 	$idsa = array();
 	foreach($configuration as $conf)
