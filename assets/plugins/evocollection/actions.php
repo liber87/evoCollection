@@ -1,8 +1,8 @@
-<?php
-	if(!isset($_SESSION['mgrValidated'])){ die();}
+<?php	
 	switch($_REQUEST['q'])
 	{		
 		case 'generatephpto':				
+			if(!isset($_SESSION['mgrValidated'])){ die();}
 			$iafn = explode('/',$_POST['img']);
 			$folder = str_replace(end($iafn),'',$_POST['img']);			
 			require MODX_BASE_PATH.'assets/snippets/phpthumb/phpthumb.class.php';
@@ -23,7 +23,8 @@
 			exit();
 		break;
 		
-		case 'getcontent':			
+		case 'getcontent':	
+			if(!isset($_SESSION['mgrValidated'])){ die();}
 			if ($_POST['table']=='content') echo $modx->db->getValue('Select '.$modx->db->escape($_POST['field']).' from '.$modx->getFullTableName('site_content').' where id='.$modx->db->escape($_POST['id']));					
 			else 
 			{
@@ -33,7 +34,8 @@
 			exit();
 		break;
 		
-		case 'getnewdoc':						
+		case 'getnewdoc':	
+			if(!isset($_SESSION['mgrValidated'])){ die();}
 			$doc = array(
 			'type'=>'document',
 			'contentType'=>'text/html',
@@ -61,7 +63,7 @@
 		break;
 		
 		case 'set_field_value':	
-						
+			if(!isset($_SESSION['mgrValidated'])){ die();}			
 			if ((!$_POST['id']) && (!$_POST['value'])) 
 			{
 				echo 'Wrong query!';
