@@ -170,7 +170,8 @@ $j(document).ready(function(){
 		
 		if ($j(this).prev().children('div').hasClass('rte'))
 		{
-			t = $j(this).prev().children('div').data('type')
+			t = $j(this).prev().children('div').data('type');
+			$j(".save_content").data({"t":t});			
 			ta_id = '#'+$j(this).prev().children('div').attr('id')
 			var data = $j(this).prev().data();
 			$j.post(document.location.protocol+'//'+document.location.host+'/getcontent',
@@ -244,6 +245,8 @@ $j(document).ready(function(){
 	});
 	
 	$j(".save_content").click(function(e){
+		t = $j(this).data('t');
+		console.log(t);
 		if (t=='rte')
 		{
 			if (tinymce.activeEditor === null) return;
@@ -251,6 +254,7 @@ $j(document).ready(function(){
 			tinyMCE.activeEditor.destroy();
 		}
 		else var text = $j('#popup_rich_area').val();
+		
 		set_field_value($j(ta_id).parent(),text);		
 		$j("#popup_rich").hide();		
 		not_submit = false;
