@@ -22,7 +22,7 @@ function OpenServerBrowser(url, width, height )
 	var oWindow = window.open( url, 'FCKBrowseWindow', sOptions ) ;	
 }
 
-function BrowseServer(ctrl,t) {
+function BrowseServerEC(ctrl,t) {
 	lastImageCtrl = ctrl;	
 	var w = screen.width * 0.5;
 	var h = screen.height * 0.5;
@@ -164,7 +164,7 @@ $j(document).ready(function(){
 			var iid = $j(this).prev().children('input').data('id');
 			var t = $j(this).prev().children('input').data('browser')
 			$j(this).prev().show();			
-			BrowseServer(iid,t);	
+			BrowseServerEC(iid,t);	
 			return false;
 		}
 		
