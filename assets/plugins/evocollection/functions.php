@@ -89,6 +89,24 @@
 					if ($value) return '<div style="text-align:center;">Да</div>';
 					else return '<div style="text-align:center;">Нет</div>';
 					break;
+					
+					case 'select':					
+					$s='Не выбрано';
+					foreach(explode($delimiter,$elements) as $str)
+					{
+						
+						$col = explode('==',$str);
+						if (isset($col[1]))
+						{
+							if ($col[1]==$value) $s= $col[0];							
+						}
+						else 
+						{
+							if ($col[0]==$value) $s= $col[0];							
+						}
+					}
+					return $s;
+					break;
 
 					
 					default:
@@ -149,6 +167,25 @@
 						case 'oncecheckbox':
 						if ($value) $chk=' checked="checked"';
 						$return = '<input type="checkbox" value="1"'.$chk.' style="margin:0 auto;">';
+						break;
+						
+						case 'select':
+						$s = '<select>';					
+						foreach(explode($delimiter,$elements) as $str)
+						{
+							$col = explode('==',$str);
+							if (isset($col[1]))
+							{
+								if ($col[1]==$value) $s.= '<option value="'.$col[1].'" selected="selected">'.$col[0].'</option>';
+								else $s.= '<option value="'.$col[1].'">'.$col[0].'</option>';
+							}
+							else 
+							{
+								if ($col[0]==$value) $s.= '<option value="'.$col[0].'" selected="selected">'.$col[0].'</option>';
+								else $s.= '<option value="'.$col[0].'">'.$col[0].'</option>';
+							}
+						}
+						return $s.'</select>';
 						break;
 						
 					}
