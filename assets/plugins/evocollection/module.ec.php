@@ -20,6 +20,7 @@
 	'file'=>'Файл',
 	'textarea'=>'Текстовое поле',
 	'richtext'=>'Текстовый редактор',
+	'select'=>'Одиночный выбор (TV)',	
 	'oncecheckbox'=>'Одиночный чекбокс');
 	$optSelect='';
 	foreach($optArr as $key => $val) $optSelect.='<option value=\''.$key.'\'>'.$val.'</option>';
