@@ -181,7 +181,7 @@
 		if ($cf[$f]['table']!='tv')
 		{			
 			$url = $modx->config[site_manager_url];
-			$url.= '?a=27&id='.$_GET[id];			
+			$url.= '?a=27&id='.$_GET['id'];			
 			if ($_GET['show']) $url.='&show='.$_GET['show'];
 			$url.='&sorter=c.'.$cf[$f]['caption'];
 			if ($_GET['direction']=='asc')
@@ -239,13 +239,13 @@
 				$tbl.='
 				<td>
 				<div class="ecoll_field"><div class="input" 
-				data-id="'.$row[id].'"
+				data-id="'.$row['id'].'"
 				data-table="'.$table.'"
 				data-field="'.$f.'"
 				data-user_func="'.$user.'"									
 				data-type="'.$type.'"																		
 				>'.get_output(
-				array('did'=>$row[id],
+				array('did'=>$row['id'],
 				'value'=>$row[$f],
 				'field'=>$f,
 				'table'=>$table,
@@ -254,7 +254,7 @@
 				'mode'=>'input')).'</div>
 				
 				
-				<div class="output">'.get_output(array('did'=>$row[id],
+				<div class="output">'.get_output(array('did'=>$row['id'],
 				'value'=>$row[$f],
 				'field'=>$f,
 				'table'=>$table,
@@ -265,7 +265,7 @@
 			}
 			
 		}		
-		$tbl.= '<td><div class="actions text-center text-nowrap"><a href="index.php?a=27&amp;id='.$row[id].'&amp;dir=DESC&amp;sort=createdon" title="Редактировать"><i class="fa fa-pencil-square-o"></i></a></div></td><td><input type="checkbox" name="docid[]" value="'.$row[id].'" class="docid"></td></tr>';		
+		$tbl.= '<td><div class="actions text-center text-nowrap"><a href="index.php?a=27&amp;id='.$row['id'].'&amp;dir=DESC&amp;sort=createdon" title="Редактировать"><i class="fa fa-pencil-square-o"></i></a><a href="'.$modx->makeurl($row['id'],'','','full').'" target="_blank"><i class="fa fa-eye" aria-hidden="true"></i></a></div></td><td><input type="checkbox" name="docid[]" value="'.$row['id'].'" class="docid"></td></tr>';		
 	}
 	
 	
@@ -322,7 +322,7 @@
 	$output.='</ul></div>';
 	}
 	$output.='</div>';
-	$template = $modx->db->getValue('Select template from '.$modx->getFullTableName('site_content').' where parent='.$_GET[id]);
+	$template = $modx->db->getValue('Select template from '.$modx->getFullTableName('site_content').' where parent='.$_GET['id']);
 	if (!$template) $template=$default_template;
 	$output.='<div id="popup_rich"><div id="close"><i class="fa fa-close"></i></div><h2>Редактирование содержимого</h2><div id="rta"></div><div style="text-align:center; margin-top:10px;"><a  class="btn btn-success save_content">Сохранить</a></div></div></div>
 	
