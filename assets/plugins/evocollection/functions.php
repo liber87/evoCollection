@@ -85,6 +85,12 @@
 					$return = $value;
 					break;
 					
+					case 'oncecheckbox':
+					if ($value) return '<div style="text-align:center;">Да</div>';
+					else return '<div style="text-align:center;">Нет</div>';
+					break;
+
+					
 					default:
 					$return = strip_tags($value);
 					break;		
@@ -97,65 +103,72 @@
 				
 				
 				case 'input':
-				$value = str_replace('"','\"',$value);
-				
-				switch($type)
-				{
-					default:
-					
-					$value = htmlspecialchars($value);
-					$return = '<input type="text" value="'.$value.'">';
-					break;
-					
-					
-					case 'mediumtext':
-					$return = mb_substr(strip_tags($value),0,75).'...';
-					break;
-					
-					case 'number':
-					$return = '<input type="number" value="'.strip_tags($value).'">';
-					break;
-					
-					case 'date':						
-					if ($value>0)
+				$value = str_replace('"','\"',$value);				
+					switch($type)
 					{
-						$value = gmdate("Y-m-d", $value); 
-						$return = '<input type="date" value="'.strip_tags($value).'">';
+						default:
+						
+						$value = htmlspecialchars($value);
+						$return = '<input type="text" value="'.$value.'">';
+						break;
+						
+						
+						case 'mediumtext':
+						$return = mb_substr(strip_tags($value),0,75).'...';
+						break;
+						
+						case 'number':
+						$return = '<input type="number" value="'.strip_tags($value).'">';
+						break;
+						
+						case 'date':						
+						if ($value>0)
+						{
+							$value = gmdate("Y-m-d", $value); 
+							$return = '<input type="date" value="'.strip_tags($value).'">';
+						}
+						else $return = '<input type="date">';
+						break;
+						
+						case 'image':						
+						$return = '<input type="text" id="tv_'.$field.'_'.$did.'" name="tv_'.$field.'_'.$did.'" value="'.strip_tags($value).'" data-id="tv_'.$field.'_'.$did.'" class="browser" data-browser="images">';
+						break;
+						
+						case 'file':						
+						$return = '<input type="text" id="tv_'.$field.'_'.$did.'" name="tv_'.$field.'_'.$did.'" value="'.strip_tags($value).'" data-id="tv_'.$field.'_'.$did.'" class="browser" data-browser="files">';
+						break;
+						
+						case 'textarea':
+						$return = '<div class="rte" data-type="textarea" id="ta_'.$field.'_'.$did.'"></div>';
+						break;
+						
+						case 'richtext':
+						$return = '<div class="rte" data-type="rte" id="ta_'.$field.'_'.$did.'"></div>';
+						break;
+						
+						case 'oncecheckbox':
+						if ($value) $chk=' checked="checked"';
+						$return = '<input type="checkbox" value="1"'.$chk.' style="margin:0 auto;">';
+						break;
+						
 					}
-					else $return = '<input type="date">';
-					break;
-					
-					case 'image':						
-					$return = '<input type="text" id="tv_'.$field.'_'.$did.'" name="tv_'.$field.'_'.$did.'" value="'.strip_tags($value).'" data-id="tv_'.$field.'_'.$did.'" class="browser" data-browser="images">';
-					break;
-					
-					case 'file':						
-					$return = '<input type="text" id="tv_'.$field.'_'.$did.'" name="tv_'.$field.'_'.$did.'" value="'.strip_tags($value).'" data-id="tv_'.$field.'_'.$did.'" class="browser" data-browser="files">';
-					break;
-					
-					case 'textarea':
-					$return = '<div class="rte" data-type="textarea" id="ta_'.$field.'_'.$did.'"></div>';
-					break;
-					
-					case 'richtext':
-					$return = '<div class="rte" data-type="rte" id="ta_'.$field.'_'.$did.'"></div>';
-					break;
-					
-					break;
-					
-					
-					case 'execute':							
+				break;
+				
+				case 'execute':							
 					switch ($type) 
 					{			
 						case 'date':
 						$startdate = date($value." 12:00:00");
 						return strtotime($startdate);				
 						break;
+						
+						case 'oncecheckbox':
+						if ($value) return 1;
+						else return 0;
+						break;
+
 					}			
-					break;
-					
-				}
-				
+				break;
 			}	
 			
 			if (!$return) $return=$value;				
