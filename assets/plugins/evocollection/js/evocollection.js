@@ -22,7 +22,7 @@ function OpenServerBrowser(url, width, height )
 	var oWindow = window.open( url, 'FCKBrowseWindow', sOptions ) ;	
 }
 
-function BrowseServerEC(ctrl,t) {
+function BrowseServer(ctrl,t) {
 	lastImageCtrl = ctrl;	
 	var w = screen.width * 0.5;
 	var h = screen.height * 0.5;
@@ -115,9 +115,17 @@ function truncate(str, maxlength)
 
 function blur_input(el)
 {
+	var val = el.val()
+	if (el.attr('type')=='checkbox') 
+	{
+		if(el.prop("checked")) val =1
+		else val=0
+	}
+	
+	console.log(val);
 	el.closest('.input').hide();
 	el.closest('.input').next().show();
-	set_field_value(el.parent(),el.val());	
+	set_field_value(el.parent(),val);	
 	not_submit = false;
 }
 function set_photo(idx)
@@ -164,14 +172,13 @@ $j(document).ready(function(){
 			var iid = $j(this).prev().children('input').data('id');
 			var t = $j(this).prev().children('input').data('browser')
 			$j(this).prev().show();			
-			BrowseServerEC(iid,t);	
+			BrowseServer(iid,t);	
 			return false;
 		}
 		
 		if ($j(this).prev().children('div').hasClass('rte'))
 		{
-			t = $j(this).prev().children('div').data('type');
-			$j(".save_content").data({"t":t});			
+			t = $j(this).prev().children('div').data('type')
 			ta_id = '#'+$j(this).prev().children('div').attr('id')
 			var data = $j(this).prev().data();
 			$j.post(document.location.protocol+'//'+document.location.host+'/getcontent',
@@ -197,8 +204,7 @@ $j(document).ready(function(){
 		
 	});
 	
-	$j('#table_doc').on('change','.browser',function(){
-		//$j('.browser').change(function(){
+	$j('#table_doc').on('change','.browser',function(){		
 		blur_input($j(this));
 	});
 	
@@ -245,8 +251,6 @@ $j(document).ready(function(){
 	});
 	
 	$j(".save_content").click(function(e){
-		t = $j(this).data('t');
-		console.log(t);
 		if (t=='rte')
 		{
 			if (tinymce.activeEditor === null) return;
@@ -254,7 +258,6 @@ $j(document).ready(function(){
 			tinyMCE.activeEditor.destroy();
 		}
 		else var text = $j('#popup_rich_area').val();
-		
 		set_field_value($j(ta_id).parent(),text);		
 		$j("#popup_rich").hide();		
 		not_submit = false;
