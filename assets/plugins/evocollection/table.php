@@ -204,6 +204,7 @@
 		$tbl.='<td width="'.$width.'">'.$caption.'</td>';
 	}
 	
+		
 	$tbl.='<th width="1%"></th><th><input type="checkbox"  id="checkall" ></th></tr></thead><tbody>';
 	
 	$res = $modx->db->query($sql);	
@@ -223,7 +224,8 @@
 		$tbl.= '<tr data-id="'.$row['id'].'" '.$deltr.' '.$getsr.'>';
 		foreach($ff as $f)
 		{
-			
+		
+				
 			
 			if($cf[$f]['table']=='tv') $table="tv";
 			else $table = "content";
@@ -240,8 +242,10 @@
 				<td>
 				<div class="ecoll_field"><div class="input" 
 				data-id="'.$row['id'].'"
-				data-table="'.$table.'"
+				data-table="'.$table.'"				
 				data-field="'.$f.'"
+				data-elements="'.$modx->db->escape($cf[$f]['elements']).'"
+				data-delimiter="'.$modx->db->escape($cf[$f]['delimiter']).'"
 				data-user_func="'.$user.'"									
 				data-type="'.$type.'"																		
 				>'.get_output(
@@ -250,6 +254,8 @@
 				'field'=>$f,
 				'table'=>$table,
 				'type'=>$type,
+				'elements'=>$cf[$f]['elements'],
+				'delimiter'=>$cf[$f]['delimiter'],
 				'user_func'=>$user,
 				'mode'=>'input')).'</div>
 				
@@ -258,6 +264,8 @@
 				'value'=>$row[$f],
 				'field'=>$f,
 				'table'=>$table,
+				'elements'=>$cf[$f]['elements'],
+				'delimiter'=>$cf[$f]['delimiter'],
 				'type'=>$type,
 				'user_func'=>$user,
 				'mode'=>'output')).'</div></div>
