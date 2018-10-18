@@ -1,27 +1,30 @@
 <?php
 	if(!isset($_SESSION['mgrValidated'])){ die();}
 	require_once(MODX_BASE_PATH."assets/plugins/evocollection/config.inc.php");
+	if (file_exists(MODX_BASE_PATH."assets/plugins/evocollection/lang/".$modx->config['manager_language'].".php")) require_once(MODX_BASE_PATH."assets/plugins/evocollection/lang/".$modx->config['manager_language'].".php");
+	else require_once(MODX_BASE_PATH."assets/plugins/evocollection/lang/russian-UTF8.php");
 	
+		
 	$page = '
 	<html>
 	<head>
-	<title>Модуль редактирования конфигурации evoCollection</title>
+	<title>'.$lang['title'].'</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<script src="media/script/jquery/jquery.min.js" type="text/javascript"></script>
 	<script type="text/javascript" src="media/script/tabpane.js"></script>
 	<script type="text/javascript">';
 	
 	$optArr = array(
-	'default'=>'По умолчанию',
-	'user'=>'Пользовательский',
-	'number'=>'Числовой',
-	'date'=>'Дата',
-	'image'=>'Картинка',
-	'file'=>'Файл',
-	'textarea'=>'Текстовое поле',
-	'richtext'=>'Текстовый редактор',
-	'select'=>'Одиночный выбор (TV)',	
-	'oncecheckbox'=>'Одиночный чекбокс');
+	'default'=>$lang['default'],
+	'user'=>$lang['user'],
+	'number'=>$lang['number'],
+	'date'=>$lang['date'],
+	'image'=>$lang['image'],
+	'file'=>$lang['file'],
+	'textarea'=>$lang['textarea'],
+	'richtext'=>$lang['text_editor'],
+	'select'=>$lang['select'],	
+	'oncecheckbox'=>$lang['checkbox']);
 	$optSelect='';
 	foreach($optArr as $key => $val) $optSelect.='<option value=\''.$key.'\'>'.$val.'</option>';
 	$page.='optSelect = "'.$optSelect.'";'.PHP_EOL;
@@ -45,7 +48,7 @@
 	left join '.$modx->getFullTableName('categories').' as cat
 	on cat.id = vars.`category`
 	order by `category`,`name`');
-	$page.='<optgroup label=\'Без категории\'>';
+	$page.='<optgroup label=\''.$lang['not_category'].'\'>';
 	
 	while($row = $modx->db->getRow($res))
 	{
@@ -139,24 +142,24 @@
 		$f=fopen(MODX_BASE_PATH."assets/plugins/evocollection/config.inc.php",'w');
 		fwrite($f,$text);
 		fclose($f);
-		$result = '<div class="alert alert-success">Конфигурация успешно сохранена!</div>';
+		$result = '<div class="alert alert-success">'.$lang['config_save_success'].'</div>';
 	}
 	
 	if (!$idc) $idc = $_GET['idc'];
 	
 	if (($idc) or ($action=='new'))
 	{
-		if ($idc) $pagetitle= 'Редактирование коллекции';
-		else $pagetitle= 'Новая коллекция';
+		if ($idc) $pagetitle= $lang['edit_collection'];
+		else $pagetitle= $lang['new_collection'];
 		
 		$module='<div id="actions">
 		<div class="btn-group">
         <a id="Button2" class="btn" href="javascript:;" onclick="window.location.href=\'index.php?a=112&id='.$_GET['id'].'\'">
-		<i class="fa fa-times-circle"></i><span>Отмена</span>
+		<i class="fa fa-times-circle"></i><span>'.$lang['cancel'].'</span>
         </a>
 		
 		<a id="Button1" class="btn btn-success" href="javascript:;" onclick="$(\'#config_form\').submit();">
-		<i class="fa fa-times-circle"></i><span>Сохранить</span>
+		<i class="fa fa-times-circle"></i><span>'.$lang['save'].'</span>
         </a>
 		
 		</div>
@@ -169,34 +172,34 @@
 		<input type="hidden" name="action" value="work">
 		<input type="hidden" name="id" value="'.$idc.'">			
 		<div class="tab-section">
-		<div class="tab-header">Общее</div>
+		<div class="tab-header">'.$lang['general'].'</div>
 		<div class="tab-body">			
 		<div class="row">
 		<div class="col-xs-12">
-		<label>Название конфигурации</label>
+		<label>'.$lang['name_config'].'</label>
 		<input name="name" type="text" maxlength="255" value="'.$config[$idc]['name'].'" class="inputBox" >				
 		
-		<label>Описание</label>
+		<label>'.$lang['description'].'</label>
 		<textarea class="inputBox" name="description">'.$config[$idc]['description'].'</textarea>
 		</div>	
 		
 		<div class="col-xs-12 col-sm-6">
-		<label>Применять к</label>
+		<label>'.$lang['to_apply_to'].'</label>
 		<select name="type" class="inputBox" id="elements_change">
 		<option value="template"';
 		if ($config[$idc]['type']=='template') $module.=' selected="selected" ';
-		$module.= '>Шаблону</option>						
+		$module.= '>'.$lang['template'].'</option>						
 		<option value="ids"';
 		if ($config[$idc]['type']=='ids') $module.=' selected="selected" ';
-		$module.= '>Документам</option>						
+		$module.= '>'.$lang['documents'].'</option>						
 		</select>
 		</div>
 		
 		<div class="col-xs-12 col-sm-6 elements" id="template"';
 		if ($config[$idc]['type']=='ids') $module.=' style="display:none;" ';
-		$module.='><label>Значение</label>
+		$module.='><label>'.$lang['value'].'</label>
 		<select name="template" class="inputBox">
-		<option value="">не выбрано</option>';
+		<option value="">'.$lang['not_selected'].'</option>';
 		$templates = $modx->db->query('Select template.id,templatename,cat.category from '.$modx->getFullTableName('site_templates').' as template
 		left join '.$modx->getFullTableName('categories').' as cat
 		on cat.id = template.`category`
@@ -223,31 +226,31 @@
 		<div class="col-xs-12 col-sm-6 elements" id="ids"';
 		if ($config[$idc]['type']!='ids') $module.=' style="display:none;" ';
 		$module.='>
-		<label>Значение</label>
+		<label>'.$lang['value'].'</label>
 		<input type="text" maxlength="255" name="ids" placeholder="Через запятую" value="'.$config[$idc]['value'].'" class="inputBox" >					
 		</div>
 		<div class="col-xs-12">
-		<label>Показывать документы в древе</label>
+		<label>'.$lang['show_doc_on_tree'].'</label>
 		<select name="show_child" class="inputBox">						
 		<option value="0"';
 		if ($config[$idc]['show_child']=='0') $module.=' selected="selected" ';
-		$module.='>Нет</option>				
+		$module.='>'.$lang['no'].'</option>				
 		<option value="1"';
 		if ($config[$idc]['show_child']=='1') $module.=' selected="selected" ';
-		$module.='>Да</option>						
+		$module.='>'.$lang['yes'].'</option>						
 		</select>
 		</div>
 		
 		
 		<div class="col-xs-12">
-		<label>Расположение новых документов</label>
+		<label>'.$lang['location'].'</label>
 			<select name="new_doc" class="inputBox">
 				<option value="down"';
 				if ($config[$idc]['new_doc']=='down') $module.=' selected="selected" ';
-				$module.='>Внизу</option>
+				$module.='>'.$lang['down'].'</option>
 				<option value="up"';
 				if ($config[$idc]['new_doc']=='up') $module.=' selected="selected" ';
-				$module.='>Вверху</option>
+				$module.='>'.$lang['up'].'</option>
 			</select>
 		</div>
 		
@@ -258,10 +261,10 @@
 		</div>
 		</div>
 		<div class="tab-section">
-		<div class="tab-header">Настройки вкладки</div>
+		<div class="tab-header">'.$lang['setting_tab'].'</div>
 		<div class="tab-body">
-		<label>Заголовок вкладки</label>
-		<input type="text" maxlength="255" name="title" placeholder="по умолчанию: название ресурса" value="'.$config[$idc]['title'].'" class="inputBox" >				
+		<label>'.$lang['title_tab'].'</label>
+		<input type="text" maxlength="255" name="title" placeholder="'.$lang['default_name_doc'].'" value="'.$config[$idc]['title'].'" class="inputBox" >				
 		
 		
 		
@@ -269,7 +272,7 @@
 		</div>
 		
 		<div class="tab-section">
-		<div class="tab-header">Используемые столбцы</div>
+		<div class="tab-header">'.$lang['columns_used'].'</div>
 		<div class="tab-body">			
 		<div class="row">
 		
@@ -278,11 +281,11 @@
 		<table class="grid" cellpadding="1" cellspacing="1" id="table_rows">
 		<thead>
 		<tr>
-		<td class="gridHeader"><label>Заголовок</label></td>
-		<td class="gridHeader"><label>Значение</label></td>
-		<td class="gridHeader"><label>Вывод</label></td>							
-		<td class="gridHeader"><label>Обработчик</label></td>							
-		<td class="gridHeader"><label>Ширина</label></td>							
+		<td class="gridHeader"><label>'.$lang['titl'].'</label></td>
+		<td class="gridHeader"><label>'.$lang['value'].'</label></td>
+		<td class="gridHeader"><label>'.$lang['enter'].'</label></td>							
+		<td class="gridHeader"><label>'.$lang['handler'].'</label></td>							
+		<td class="gridHeader"><label>'.$lang['width'].'</label></td>							
 		<td></td>
 		</tr>
 		</thead>
@@ -299,7 +302,7 @@
 				<div>
 				<input type="text" maxlength="255" name="value_row[]" value="'.$field.'" class="inputBox" >
 				</div>
-				<small>выбрать из: <a href="#" class="set_doc" style="margin-left:5px;">документа</a> <a href="#" class="set_tv" style="margin-left:5px;">ТВ-параметров</a> <a href="#" class="cancel" style="margin-left:5px;">отменть</a></small>
+				<small>'.$lang['choose_from'].': <a href="#" class="set_doc" style="margin-left:5px;">'.$lang['document_a'].'</a> <a href="#" class="set_tv" style="margin-left:5px;">'.$lang['tvs'].'</a> <a href="#" class="cancel" style="margin-left:5px;">'.$lang['cancel'].'</a></small>
 				</td>
 				<td valign="top"><select class="inputBox" name="type_row[]">';
 				
@@ -325,7 +328,7 @@
 		<div>
 		<input type="text" maxlength="255" name="value_row[]" value="" class="inputBox" >
 		</div>
-		<small>выбрать из: <a href="#" class="set_doc" style="margin-left:5px;">документа</a> <a href="#" class="set_tv" style="margin-left:5px;">ТВ-параметров</a> <a href="#" class="cancel" style="margin-left:5px;">отменть</a></small>
+		<small>выбрать из: <a href="#" class="set_doc" style="margin-left:5px;">'.$lang['document_a'].'</a> <a href="#" class="set_tv" style="margin-left:5px;">'.$lang['tvs'].'</a> <a href="#" class="cancel" style="margin-left:5px;">'.$cancel.'</a></small>
 		</td>
 		<td valign="top"><select class="inputBox" name="type_row[]">';
 		
@@ -345,41 +348,41 @@
 		</div>
 		</div>
 		<div class="tab-section">
-		<div class="tab-header">Прочее</div>
+		<div class="tab-header">'.$lang['another'].'</div>
 		<div class="tab-body">			
 		<div class="row">
 		
 		<div class="col-xs-12 col-sm-4">
-		<label>Сортировать по столбцу</label>
+		<label>'.$lang['sort_col'].'</label>
 		<div>
 		<input type="text" maxlength="255" name="sort" value="'.$config[$idc]['sort'].'" class="inputBox" >					
 		</div>					
 		</div>
 		<div class="col-xs-12 col-sm-4">
-		<label>Направление сортировки</label>
+		<label>'.$lang['sort_dir'].'</label>
 		<select name="direction" class="inputBox">						
 		<option value="asc"';
 		if ($config[$idc]['direction']=='asc') $module.=' selected="selected" ';
-		$module.='>По возрстанию</option>				
+		$module.='>'.$lang['asc'].'</option>				
 		<option value="desc"';
 		if ($config[$idc]['direction']=='desc') $module.=' selected="selected" ';
-		$module.='>По убыванию</option>						
+		$module.='>'.$lang['desc'].'</option>						
 		</select>
 		</div>
 		<div class="col-xs-12 col-sm-4">
-		<label>Показывать по</label>
+		<label>'.$lang['show_by'].'</label>
 		<input type="text" maxlength="255" name="limit" value="'.$config[$idc]['limit'].'" class="inputBox" >					
 		</div>
 		<div class="col-xs-12">
-		<label>Шаблон по умолчанию <small>(для вновь созданных ресурсов)</small></label>
+		<label>'.$lang['default_template'].' <small>('.$lang['for_new_doc'].')</small></label>
 		<select name="template_default" class="inputBox">
-		<option value="">не выбрано</option>';
+		<option value="">'.$lang['not_selected'].'</option>';
 		$templates = $modx->db->query('Select template.id,templatename,cat.category from '.$modx->getFullTableName('site_templates').' as template
 		left join '.$modx->getFullTableName('categories').' as cat
 		on cat.id = template.`category`
 		order by category,templatename');
 		$ortop='';
-		$module.='<optgroup label=\'Без категории\'>';
+		$module.='<optgroup label=\''.$lang['not_category'].'\'>';
 		while($row = $modx->db->getRow($templates))
 		{
 			if (($ortop!=$row['category']) && ($row['category']))
@@ -395,14 +398,14 @@
 		$module.='</select>
 		</div>
 		<div class="col-xs-12">
-		<label>Способ редактирования</label>
+		<label>'.$lang['editing_method'].'</label>
 		<select name="how_edit" class="inputBox">						
 		<option value="dblclick"';
 		if ($config[$idc]['how_edit']=='dblclick') $module.=' selected="selected" ';
-		$module.='>По двойному клику</option>				
+		$module.='>'.$lang['dblclick'].'</option>				
 		<option value="contextmenu"';
 		if ($config[$idc]['how_edit']=='contextmenu') $module.=' selected="selected" ';
-		$module.='>Правой кнопкой</option>						
+		$module.='>'.$lang['rclick'].'</option>						
 		</select>
 		</div>
 		
@@ -420,12 +423,12 @@
 	}
 	else
 	{
-		$pagetitle = 'Список коллекций';
+		$pagetitle = $lang['list_collection'];
 		
 		$module='<div id="actions">
 		<div class="btn-group">
         <a id="Button1" class="btn btn-success" href="javascript:;" onclick="window.location.href=\'index.php?a=112&id='.$_GET['id'].'&action=new\'">
-		<i class="fa fa-times-circle"></i><span>Создать новую конфигурацию</span>
+		<i class="fa fa-times-circle"></i><span>'.$lang['create_new_config'].'</span>
         </a>
 		</div>
 		</div>';
@@ -434,7 +437,7 @@
 		{
 			$module.='
 			<div class="tab-section">
-			<div class="tab-header">Общее</div>
+			<div class="tab-header">'.$lang['general'].'</div>
 			<div class="tab-body">			
 			<div class="row">
 			<div class="col-xs-12">
@@ -442,8 +445,8 @@
 			<thead>
 			<tr>
 			<td class="gridHeader"><label>ID</label></td>
-			<td class="gridHeader"><label>Название</label></td>
-			<td class="gridHeader"><label>Описание</label></td>							
+			<td class="gridHeader"><label>'.$lang['name'].'</label></td>
+			<td class="gridHeader"><label>'.$lang['description'].'</label></td>							
 			<td style="width:1%;"></td>
 			</tr>
 			</thead>
@@ -471,7 +474,7 @@
 		}
 		else
 		{
-			$module.='<div class="alert alert-info">У вас пока нет не одной конфигурации. <a href="index.php?a=112&id='.$_GET['id'].'&action=new">Нажмите здесь</a> чтобы создать первую конфигурацию.</div>';
+			$module.='<div class="alert alert-info">'.$lang['not_config'].'<a href="index.php?a=112&id='.$_GET['id'].'&action=new">'.$lang['click_here'].'</a> '.$lang['create_new_config'].'</div>';
 		}
 		
 	}
