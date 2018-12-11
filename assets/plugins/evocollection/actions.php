@@ -29,7 +29,7 @@
 			else 
 			{
 				$idtv = $modx->db->getValue('Select `id` from '.$modx->getFullTableName('site_tmplvars').' where name="'.$_POST['field'].'"');	
-				echo $modx->db->getValue('Select `value` from '.$modx->getFullTableName('site_tmplvar_contentvalues').' where contentid='.$_POST[id].' and `tmplvarid`='.$idtv);
+				echo $modx->db->getValue('Select `value` from '.$modx->getFullTableName('site_tmplvar_contentvalues').' where contentid='.$_POST['id'].' and `tmplvarid`='.$idtv);
 			}
 			exit();
 		break;
@@ -75,7 +75,7 @@
 			
 			// Обработка поля			
 			$val = get_output(array('did'=>$_POST['id'],
-			'value'=>$_POST[value],
+			'value'=>$_POST['value'],
 			'field'=>$_POST['field'],
 			'table'=>$_POST['table'],
 			'type'=>$_POST['type'],
@@ -95,12 +95,12 @@
 				$idtv = $modx->db->getValue('Select `id` from '.$modx->getFullTableName('site_tmplvars').' where name="'.$modx->db->escape($_POST['field']).'"');	
 				if ($modx->db->getValue('Select count(*) from '.$modx->getFullTableName('site_tmplvar_contentvalues').' where contentid='.$modx->db->escape($_POST['id']).' and `tmplvarid`='.$idtv))
 				{
-					$modx->db->query('Update '.$modx->getFullTableName('site_tmplvar_contentvalues').' set value="'.$modx->db->escape($val).'" where contentid='.$modx->db->escape($_POST[id]).' and `tmplvarid`='.$modx->db->escape($idtv));
+					$modx->db->query('Update '.$modx->getFullTableName('site_tmplvar_contentvalues').' set value="'.$modx->db->escape($val).'" where contentid='.$modx->db->escape($_POST['id']).' and `tmplvarid`='.$modx->db->escape($idtv));
 				}
 				else $modx->db->insert(array('contentid'=>$modx->db->escape($_POST['id']),'tmplvarid'=>$modx->db->escape($idtv),'value'=>$modx->db->escape($val)),$modx->getFullTableName('site_tmplvar_contentvalues'));
 			}
 			
-			echo get_output(array('did'=>$_POST[id],
+			echo get_output(array('did'=>$_POST['id'],
 			'value'=>$val,
 			'field'=>$_POST['field'],
 			'table'=>$_POST['table'],
