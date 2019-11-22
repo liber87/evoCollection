@@ -348,4 +348,4 @@
 	
 	';		
 	
-$e->output($output);
+$modx->event->output($output);
