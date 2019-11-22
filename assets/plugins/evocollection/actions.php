@@ -47,6 +47,7 @@
 			'published'=>'1',
 			'pub_date'=>'0',
 			'unpub_date'=>'0',
+			'createdon'=>time(),
 			'parent'=>$modx->db->escape($_POST['parent']),
 			'isfolder'=>'0',
 			'introtext'=>'',
