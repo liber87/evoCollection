@@ -11,7 +11,7 @@
 		* @internal    @modx_category Manager and Admin
 		* @author      Alexey Liber
 	* @lastupdate  02.03.2018 */
-	$e = &$modx->Event;
+	
 	if (isset($_SESSION['mgrValidated']))
 	{		
 		if (!file_exists(MODX_BASE_PATH."assets/plugins/evocollection/config.inc.php"))
@@ -27,7 +27,7 @@
 		
 	
 	//Actions
-	switch($e->name)
+	switch($modx->event->name)
 	{
 		case 'OnPageNotFound':		
 		require MODX_BASE_PATH."assets/plugins/evocollection/actions.php";
