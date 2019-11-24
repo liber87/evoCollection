@@ -164,7 +164,12 @@
 		$getsr = 'id="getstr"';
 	}
 	
-	$sql = "SELECT ".$fsql." FROM ".$modx->getFullTableName('site_content')." as c ".implode(' ',$tv_join)." where c.parent=".$id." ".$onlyid."  order by ".$sorter." ".$direction." ".$l;
+	if ($modx->db->getValue('show tables like "'.$modx->db->config['table_prefix'].'site_content_categories"'))
+	{
+		$add_mc_ids = 'or (c.id in (SELECT doc FROM '.$modx->getFullTableName('site_content_categories').' where category='.$id.')) ';
+	}
+	
+	$sql = "SELECT ".$fsql." FROM ".$modx->getFullTableName('site_content')." as c ".implode(' ',$tv_join)." where c.parent=".$id." ".$onlyid."  ".$add_mc_ids." order by ".$sorter." ".$direction." ".$l;
 	
 	$tbl='<div class="row"><div class="table-responsive"><table class="table data" id="table_doc"><thead><tr class="">';
 	
@@ -288,7 +293,7 @@
 	<div class="tab-page" id="tabProducts">
 	<h2 class="tab">'.$title.'</h2>
 	
-	<div class="btn-group" style="float:right;">
+	<div class="btn-group">
 	<div class="btn-group dropdown" style=" margin:10px 10px 10px; ">					
 	
 	<select name="show" id="show" style="width:100px;">
