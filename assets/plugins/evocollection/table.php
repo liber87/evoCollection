@@ -318,7 +318,7 @@
 	</div>
 	'.$tbl;
 	
-	$cq = $modx->db->getValue('Select count(*) from '.$modx->getFullTableName('site_content').' where parent='.$id);
+	$cq = $modx->db->getValue('Select count(*) from '.$modx->getFullTableName('site_content').' as c where parent='.$id.' '.$add_mc_ids);
 	if ($_GET['show']) $limit = $_GET['show'];
 	$pages = ceil($cq/$limit);
 	if ($pages>1)
@@ -326,7 +326,7 @@
 	$output.='<div id="pagination" style="text-align:center;"><ul>';
 	for ($i=1;$i<=$pages;$i++) 
 	{
-		$url = $modx->config[site_manager_url].'?a='.$_GET['a'].'&id='.$_GET['id'];
+		$url = $modx->config['site_manager_url'].'?a='.$_GET['a'].'&id='.$_GET['id'];
 		if ($_GET['show']) $url.='&show='.$_GET['show'];
 		if ($_GET['order']) $url.='&show='.$_GET['order'];
 		
@@ -343,7 +343,7 @@
 	
 	<link rel="stylesheet" type="text/css" href="/assets/plugins/evocollection/js/evocollection.css">
 	<script>
-	manager_url = "'.$modx->config[site_manager_url].'";
+	manager_url = "'.$modx->config['site_manager_url'].'";
 	how_click = "'.$config[$idc]['how_edit'].'";
 	new_doc = "'.$config[$idc]['new_doc'].'";
 	</script>
