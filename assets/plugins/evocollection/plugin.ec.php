@@ -22,7 +22,7 @@
 		require MODX_BASE_PATH."assets/plugins/evocollection/functions.php"; 	
 	}	
 	
-	if (!count($config)) return;
+	if ((is_array($config)) && (!count($config))) return;
 	else $configuration = $config;
 		
 	
